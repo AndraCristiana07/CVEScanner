@@ -3,7 +3,7 @@
 A command-line tool for scanning uploaded files for CVEs using AWS Servicies
 
 ### Project Description
-ScanCVEs is a CLI tool that scans local folders for vulerabilities wusing Trivy, integrated with AWS Servicies such as S3, Lambda, CodeBuild, Cognito, API Gateway.
+ScanCVEs is a CLI tool that scans local folders for vulerabilities using Trivy, integrated with AWS Servicies such as S3, Lambda, CodeBuild, Cognito, API Gateway.
 
 The tool zips and uploads a folder into an S3 bucket using a presigned URL. The upload triggers a Lambda function that initiates an AWS CodeBuild project to perform a vulenrability scan with Trivy. After the scan is done, the result is stored in S3.
 
@@ -78,7 +78,7 @@ Here is an example for a 4 file summary:
   ]
 ```
 
-The cli waits to fetch the summary if it exists, gets it with the help of presigned URL and prints the count of high and critical vulnerabilities per file and in total.
+The cli waits to fetch the summary. If it exists, a Lambda function gets it with the help of presigned URL and the CLI prints the count of high and critical vulnerabilities per file and in total.
 
 The zip files will automatically be deleted from S3 after 7 days since it's been uploaded.
 

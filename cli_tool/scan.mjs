@@ -140,7 +140,7 @@ async function tryFetchSummary(id, token) {
             }
         }
         if (totalSeverities > 0) {
-            console.log(`Found ${totalSeverities} high/critical issues overall. Check S3 sumarry report!`)
+            console.log(`Found ${totalSeverities} high/critical issues overall. Check S3 summary report!`)
         } else {
             console.log(`Found no high/critical issues!!`)
         }
