@@ -78,7 +78,11 @@ Here is an example for a 4 file summary:
   ]
 ```
 
-The cli waits to fetch the summary and prints the count of high and critical vulnerabilities per file and in total.
+The cli waits to fetch the summary if it exists, gets it with the help of presigned URL and prints the count of high and critical vulnerabilities per file and in total.
+
+The zip files will automatically be deleted from S3 after 7 days since it's been uploaded.
+
+The API Gateway is used to retrieve the presigned URL with fetch.
 
 There is also a web page stored in the S3 bucket where we can see a chart of all reported severities.
 ![Chart](./media/chart.png)
