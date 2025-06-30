@@ -78,6 +78,7 @@ Here is an example for a 4 file summary:
 The cli waits to fetch the summary and prints the count of high and critical vulnerabilities per file and in total.
 
 There is also a web page stored in the S3 bucket where we can see a chart of all reported severities.
+[Chart](./media/chart.png)
 
 Authentification is handled securely with AWS Cognito.
 
