@@ -1,9 +1,9 @@
 
 # ScanCVEs
-A command-line tool for scanning uploaded files for CVEs using AWS Servicies
+A command-line tool for scanning uploaded files for CVEs using AWS Services
 
 ### Project Description
-ScanCVEs is a CLI tool that scans local folders for vulerabilities using Trivy, integrated with AWS Servicies such as S3, Lambda, CodeBuild, Cognito, API Gateway.
+ScanCVEs is a CLI tool that scans local folders for vulerabilities using Trivy, integrated with AWS Services such as S3, Lambda, CodeBuild, Cognito, API Gateway.
 
 The tool zips and uploads a folder into an S3 bucket using a presigned URL. The upload triggers a Lambda function that initiates an AWS CodeBuild project to perform a vulenrability scan with Trivy. After the scan is done, the result is stored in S3.
 
@@ -84,7 +84,8 @@ The zip files will automatically be deleted from S3 after 7 days since it's been
 
 The API Gateway is used to retrieve the presigned URL with fetch.
 
-There is also a web page stored in the S3 bucket where we can see a chart of all reported severities.
+There is also a web page stored in the S3 bucket where we can see a chart of all reported severities. The data for the page are fetched with the help of a Lambda function that gets all summaries and sums up all the vulenrabilities and an html file where I retieve the data with the help of API Gateway.
+
 ![Chart](./media/chart.png)
 
 Authentification is handled securely with AWS Cognito.
@@ -95,6 +96,7 @@ Authentification is handled securely with AWS Cognito.
 * presigned_url_put_func: Generate a presigned URL to upload (PUT) the zipped file to S3
 * presigned_url_get_func: Generate a presigned URL to download (GET) the summary of the scan results
 * summary_func: Makes the summary from a full Trivy report
+* get_total_vulnerabilities_func: Gets all summaries from S3 and makes a list of all types of total vulnerabilities over all files for the Web page
 
 ### Running 
 
