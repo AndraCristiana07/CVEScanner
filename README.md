@@ -78,7 +78,7 @@ Here is an example for a 4 file summary:
   ]
 ```
 
-The cli waits to fetch the summary. If it exists, a Lambda function gets it with the help of presigned URL and the CLI prints the count of high and critical vulnerabilities per file and in total.
+The CLI waits to fetch the summary. If it exists, a Lambda function gets it with the help of presigned URL and the CLI prints the count of high and critical vulnerabilities per file and in total.
 
 The zip files will automatically be deleted from S3 after 7 days since it's been uploaded.
 
@@ -100,7 +100,7 @@ Authentification is handled securely with AWS Cognito.
 
 ### Running 
 
-Cli Tool Use
+CLI Tool Use
 ```sh
   cd cli_tool
   npm install
