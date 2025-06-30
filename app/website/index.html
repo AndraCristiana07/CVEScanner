@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Vulnerabilities Overview</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; }
+    #chart { max-width: 400px; margin: auto; }
+    #error { color: red; text-align: center; margin-top: 20px; }
+  </style>
+</head>
+<body>
+  <h1>Vulnerabilities Overview</h1>
+  <canvas id="pieChart" style="width:100%;max-width:700px"></canvas>
+  <div id="error"></div>
+
+  <script>
+    async function fetchSeveritySummary() {
+    try {
+        const res = await fetch(`https://68xslpfi0k.execute-api.eu-west-1.amazonaws.com/prod/summary-total`)
+        if (!res.ok) {
+          throw new Error('API error ' + res.status)
+        }
+        const {total} =  await res.json()
+        console.log(total)
+        return total
+    } catch (err) {
+        document.getElementById('error').textContent = 'Error loading data: ' + err.message
+        return null
+    }
+    }
+
+    function renderChart(severities) {
+    const ctx = document.getElementById('pieChart').getContext('2d')
+    new Chart(ctx, {
+        type: 'pie',
+        data: {
+        labels: Object.keys(severities),
+        datasets: [{
+            data: Object.values(severities),
+            backgroundColor: ['#e74c3c', '#ffa500', '#f1c40f', '#2ecc71', '#95a5a6'],
+        }]
+        },
+        options: {
+        responsive: true,
+        plugins: {
+            legend: { position: 'bottom' }
+        }
+        }
+    })
+    }
+
+    async function init() {
+        const total = await fetchSeveritySummary();
+        if (!total || Object.keys(total).length === 0) {
+            document.getElementById('error').textContent = 'No vulnerabilities found.'
+            return;
+        }
+        renderChart(total);
+    }
+
+    init();
+  </script>
+</body>
+</html>

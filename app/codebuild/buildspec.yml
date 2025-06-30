@@ -1,0 +1,29 @@
+version: 0.2
+phases:
+  install:
+    commands:
+      - apt update && apt install curl unzip
+      - echo "Installing npm dependencies..."
+      - pwd
+      - curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh | sh -s -- -b /usr/local/bin v0.63.0
+  pre_build:
+    commands:
+      - pwd
+      - echo "Get and unzip files..."
+      - aws s3 cp s3://$S3_BUCKET/$ZIP_PATH .
+      - unzip $ZIP_NAME -d sourceToScan
+      - echo "Files in sourceToScan directory:"
+      - ls -R sourceToScan
+  build:
+    commands:
+      - pwd
+      - echo "Start scan..."
+      - ls
+      - trivy fs --scanners vuln,secret,misconfig -f json --output report.json sourceToScan || echo "Trivy failed"
+  post_build:
+    commands:
+      - echo "Uploading report to s3..."
+      - aws s3 cp report.json s3://$S3_BUCKET/reports/trivy_report_$SCAN_ID.json
+artifacts:
+  files:
+    - report.json
